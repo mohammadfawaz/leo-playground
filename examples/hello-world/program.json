@@ -1,0 +1,6 @@
+{
+  "program": "hello.aleo",
+  "version": "0.0.0",
+  "description": "Hello World — basic arithmetic and boolean functions.",
+  "license": "MIT"
+}

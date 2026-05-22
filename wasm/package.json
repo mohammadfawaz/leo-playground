@@ -1,0 +1,32 @@
+{
+  "name": "leo-wasm",
+  "type": "module",
+  "collaborators": [
+    "The Leo Team <leo@provable.com>"
+  ],
+  "description": "WASM bindings for the Leo compiler",
+  "version": "0.1.0",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ProvableHQ/leo"
+  },
+  "files": [
+    "leo_wasm_bg.wasm",
+    "leo_wasm.js",
+    "leo_wasm.d.ts"
+  ],
+  "main": "leo_wasm.js",
+  "homepage": "https://leo-lang.org",
+  "types": "leo_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ],
+  "keywords": [
+    "aleo",
+    "leo",
+    "wasm",
+    "compiler",
+    "zero-knowledge"
+  ]
+}
