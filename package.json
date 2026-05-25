@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +14,8 @@
   "type": "commonjs",
   "dependencies": {
     "monaco-editor": "^0.44.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
   }
 }

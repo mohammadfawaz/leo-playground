@@ -2,3 +2,5 @@ node_modules/
 target/
 *.lock
 !Cargo.lock
+test-results/
+playwright-report/
