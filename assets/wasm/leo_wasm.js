@@ -1,7 +1,7 @@
 /* @ts-self-types="./leo_wasm.d.ts" */
 
 /**
- * Compiles Leo source code to Aleo bytecode.
+ * Compiles Leo source to Aleo bytecode.
  *
  * Returns JSON: `{ success, output, abi, diagnostics }`.
  * @param {string} source
@@ -17,6 +17,40 @@ export function compile(source, program_json) {
         const ptr1 = passStringToWasm0(program_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len1 = WASM_VECTOR_LEN;
         const ret = wasm.compile(ptr0, len0, ptr1, len1);
+        deferred3_0 = ret[0];
+        deferred3_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+    }
+}
+
+/**
+ * Compile a multi-file project laid out as a virtual filesystem.
+ *
+ * - `files_json`: a JSON map `{ "<path>": "<contents>" }`. Paths are stored
+ *   verbatim; they must be self-consistent (manifest dep paths point at other
+ *   keys in this map).
+ * - `root`: the path of the project root (the directory containing
+ *   `program.json` for the main package).
+ *
+ * Returns JSON: `{ success, output, abi, imports: [{name, bytecode, abi}],
+ * diagnostics }`. `imports` carries the bytecode for every transitively-used
+ * source dependency that was emitted by codegen — `.aleo` deps don't appear
+ * because they came in pre-compiled.
+ * @param {string} files_json
+ * @param {string} root
+ * @returns {string}
+ */
+export function compile_project(files_json, root) {
+    let deferred3_0;
+    let deferred3_1;
+    try {
+        const ptr0 = passStringToWasm0(files_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(root, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        const ret = wasm.compile_project(ptr0, len0, ptr1, len1);
         deferred3_0 = ret[0];
         deferred3_1 = ret[1];
         return getStringFromWasm0(ret[0], ret[1]);
@@ -52,10 +86,7 @@ export function init() {
 /**
  * Compiles and runs a Leo function with the provided inputs.
  *
- * - `inputs_json`: JSON array of strings, e.g. `["1u32", "2u32"]`.
- * - `program_json`: the program.json object as a JSON string.
- *
- * Returns JSON: `{ success, output, diagnostics }`.
+ * Returns JSON: `{ success, output, finalize, diagnostics }`.
  * @param {string} source
  * @param {string} function_name
  * @param {string} inputs_json
@@ -84,9 +115,40 @@ export function run(source, function_name, inputs_json, program_json) {
 }
 
 /**
- * Compiles main + test source and runs all `@test` functions.
+ * Compile a project and run one function.
  *
- * Returns JSON: `{ success, results: [ { name, passed, error } ] }`.
+ * `inputs_json` is the same shape used by [`run`].
+ * @param {string} files_json
+ * @param {string} root
+ * @param {string} function_name
+ * @param {string} inputs_json
+ * @returns {string}
+ */
+export function run_project(files_json, root, function_name, inputs_json) {
+    let deferred5_0;
+    let deferred5_1;
+    try {
+        const ptr0 = passStringToWasm0(files_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(root, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        const ptr2 = passStringToWasm0(function_name, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len2 = WASM_VECTOR_LEN;
+        const ptr3 = passStringToWasm0(inputs_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len3 = WASM_VECTOR_LEN;
+        const ret = wasm.run_project(ptr0, len0, ptr1, len1, ptr2, len2, ptr3, len3);
+        deferred5_0 = ret[0];
+        deferred5_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred5_0, deferred5_1, 1);
+    }
+}
+
+/**
+ * Compiles main + test source together and runs all `@test` functions.
+ *
+ * Returns JSON: `{ success, results: [ { name, passed, error } ], diagnostics }`.
  * @param {string} main_source
  * @param {string} test_source
  * @param {string} program_json
@@ -103,6 +165,36 @@ export function run_tests(main_source, test_source, program_json) {
         const ptr2 = passStringToWasm0(program_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len2 = WASM_VECTOR_LEN;
         const ret = wasm.run_tests(ptr0, len0, ptr1, len1, ptr2, len2);
+        deferred4_0 = ret[0];
+        deferred4_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred4_0, deferred4_1, 1);
+    }
+}
+
+/**
+ * Compile a project together with a test package and run every `@test` fn.
+ *
+ * `test_root` points at the test package's root (its own `program.json`).
+ * The test package's manifest must list the main project as a dependency, the
+ * same way `leo test` does it.
+ * @param {string} files_json
+ * @param {string} root
+ * @param {string} test_root
+ * @returns {string}
+ */
+export function test_project(files_json, root, test_root) {
+    let deferred4_0;
+    let deferred4_1;
+    try {
+        const ptr0 = passStringToWasm0(files_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(root, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        const ptr2 = passStringToWasm0(test_root, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len2 = WASM_VECTOR_LEN;
+        const ret = wasm.test_project(ptr0, len0, ptr1, len1, ptr2, len2);
         deferred4_0 = ret[0];
         deferred4_1 = ret[1];
         return getStringFromWasm0(ret[0], ret[1]);

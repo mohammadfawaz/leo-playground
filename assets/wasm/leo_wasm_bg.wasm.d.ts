@@ -2,9 +2,12 @@
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
 export const compile: (a: number, b: number, c: number, d: number) => [number, number];
+export const compile_project: (a: number, b: number, c: number, d: number) => [number, number];
 export const format: (a: number, b: number) => [number, number];
 export const run: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => [number, number];
+export const run_project: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => [number, number];
 export const run_tests: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number];
+export const test_project: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number];
 export const init: () => void;
 export const __wbindgen_malloc: (a: number, b: number) => number;
 export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
