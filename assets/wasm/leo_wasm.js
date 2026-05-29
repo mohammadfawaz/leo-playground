@@ -1,9 +1,6 @@
 /* @ts-self-types="./leo_wasm.d.ts" */
 
 /**
- * Compiles Leo source to Aleo bytecode.
- *
- * Returns JSON: `{ success, output, abi, diagnostics }`.
  * @param {string} source
  * @param {string} program_json
  * @returns {string}
@@ -26,18 +23,6 @@ export function compile(source, program_json) {
 }
 
 /**
- * Compile a multi-file project laid out as a virtual filesystem.
- *
- * - `files_json`: a JSON map `{ "<path>": "<contents>" }`. Paths are stored
- *   verbatim; they must be self-consistent (manifest dep paths point at other
- *   keys in this map).
- * - `root`: the path of the project root (the directory containing
- *   `program.json` for the main package).
- *
- * Returns JSON: `{ success, output, abi, imports: [{name, bytecode, abi}],
- * diagnostics }`. `imports` carries the bytecode for every transitively-used
- * source dependency that was emitted by codegen — `.aleo` deps don't appear
- * because they came in pre-compiled.
  * @param {string} files_json
  * @param {string} root
  * @returns {string}
@@ -60,7 +45,6 @@ export function compile_project(files_json, root) {
 }
 
 /**
- * Formats Leo source code.
  * @param {string} source
  * @returns {string}
  */
@@ -79,14 +63,14 @@ export function format(source) {
     }
 }
 
+/**
+ * Install the panic hook so Rust panics surface as JS errors.
+ */
 export function init() {
     wasm.init();
 }
 
 /**
- * Compiles and runs a Leo function with the provided inputs.
- *
- * Returns JSON: `{ success, output, finalize, diagnostics }`.
  * @param {string} source
  * @param {string} function_name
  * @param {string} inputs_json
@@ -115,9 +99,6 @@ export function run(source, function_name, inputs_json, program_json) {
 }
 
 /**
- * Compile a project and run one function.
- *
- * `inputs_json` is the same shape used by [`run`].
  * @param {string} files_json
  * @param {string} root
  * @param {string} function_name
@@ -146,9 +127,6 @@ export function run_project(files_json, root, function_name, inputs_json) {
 }
 
 /**
- * Compiles main + test source together and runs all `@test` functions.
- *
- * Returns JSON: `{ success, results: [ { name, passed, error } ], diagnostics }`.
  * @param {string} main_source
  * @param {string} test_source
  * @param {string} program_json
@@ -174,11 +152,6 @@ export function run_tests(main_source, test_source, program_json) {
 }
 
 /**
- * Compile a project together with a test package and run every `@test` fn.
- *
- * `test_root` points at the test package's root (its own `program.json`).
- * The test package's manifest must list the main project as a dependency, the
- * same way `leo test` does it.
  * @param {string} files_json
  * @param {string} root
  * @param {string} test_root
