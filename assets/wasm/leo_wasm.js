@@ -205,14 +205,14 @@ export function test_project(files_json, root, test_root) {
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
-        __wbg___wbindgen_debug_string_ab4b34d23d6778bd: function(arg0, arg1) {
+        __wbg___wbindgen_debug_string_0accd80f45e5faa2: function(arg0, arg1) {
             const ret = debugString(arg1);
             const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
             const len1 = WASM_VECTOR_LEN;
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         },
-        __wbg___wbindgen_throw_6b64449b9b9ed33c: function(arg0, arg1) {
+        __wbg___wbindgen_throw_1506f2235d1bdba0: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
         __wbg_error_a6fa202b58aa1cd3: function(arg0, arg1) {
@@ -233,28 +233,28 @@ function __wbg_get_imports() {
             const ret = new Error();
             return ret;
         },
-        __wbg_new_6e6bf7dc0d8bc78b: function() { return handleError(function () {
+        __wbg_new_2ee370dca414d926: function() { return handleError(function () {
             const ret = new XMLHttpRequest();
             return ret;
         }, arguments); },
-        __wbg_open_5e2be6a99c614ccf: function() { return handleError(function (arg0, arg1, arg2, arg3, arg4, arg5) {
+        __wbg_open_837bab9ccb9e06da: function() { return handleError(function (arg0, arg1, arg2, arg3, arg4, arg5) {
             arg0.open(getStringFromWasm0(arg1, arg2), getStringFromWasm0(arg3, arg4), arg5 !== 0);
         }, arguments); },
-        __wbg_overrideMimeType_2fa901f131596c40: function() { return handleError(function (arg0, arg1, arg2) {
+        __wbg_overrideMimeType_d632a5546e034a72: function() { return handleError(function (arg0, arg1, arg2) {
             arg0.overrideMimeType(getStringFromWasm0(arg1, arg2));
         }, arguments); },
-        __wbg_responseText_001ba29b67b5c1d9: function() { return handleError(function (arg0, arg1) {
+        __wbg_responseText_266ec252b6be1e56: function() { return handleError(function (arg0, arg1) {
             const ret = arg1.responseText;
             var ptr1 = isLikeNone(ret) ? 0 : passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
             var len1 = WASM_VECTOR_LEN;
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         }, arguments); },
-        __wbg_response_3511136af9f985b1: function() { return handleError(function (arg0) {
+        __wbg_response_8ec82c168e320475: function() { return handleError(function (arg0) {
             const ret = arg0.response;
             return ret;
         }, arguments); },
-        __wbg_send_98a993204fdcf027: function() { return handleError(function (arg0) {
+        __wbg_send_dce79f146638dfda: function() { return handleError(function (arg0) {
             arg0.send();
         }, arguments); },
         __wbg_stack_3b0d974bbf31e44f: function(arg0, arg1) {
@@ -264,7 +264,7 @@ function __wbg_get_imports() {
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         },
-        __wbg_status_aeabb79459bbf950: function() { return handleError(function (arg0) {
+        __wbg_status_214edd0820ca76fc: function() { return handleError(function (arg0) {
             const ret = arg0.status;
             return ret;
         }, arguments); },
@@ -369,8 +369,7 @@ function getDataViewMemory0() {
 }
 
 function getStringFromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return decodeText(ptr, len);
+    return decodeText(ptr >>> 0, len);
 }
 
 let cachedUint8ArrayMemory0 = null;
@@ -460,8 +459,9 @@ if (!('encodeInto' in cachedTextEncoder)) {
 
 let WASM_VECTOR_LEN = 0;
 
-let wasmModule, wasm;
+let wasmModule, wasmInstance, wasm;
 function __wbg_finalize_init(instance, module) {
+    wasmInstance = instance;
     wasm = instance.exports;
     wasmModule = module;
     cachedDataViewMemory0 = null;
